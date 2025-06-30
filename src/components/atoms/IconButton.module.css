@@ -1,0 +1,20 @@
+.iconButton {
+  background: var(--color-bg);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-danger);
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: var(--shadow);
+}
+.iconButton:hover, .iconButton:focus {
+  background: var(--color-danger);
+  color: #fff;
+  outline: none;
+} 
