@@ -1,0 +1,2 @@
+// react-router-dom is required for routing. Install it with:
+// npm install react-router-dom
