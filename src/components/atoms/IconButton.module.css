@@ -15,6 +15,6 @@
 }
 .iconButton:hover, .iconButton:focus {
   background: var(--color-danger);
-  color: #fff;
+  color: var(--color-surface);
   outline: none;
 } 

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import CartList from './components/organisms/CartList';
 import CartSidebar from './components/organisms/CartSidebar';
+import styles from './CartPage.module.css';
 
 // Mock data for demonstration
 const initialCart = [
@@ -65,17 +66,8 @@ const CartPage = () => {
     .toFixed(2);
 
   return (
-    <main style={{ padding: 24, background: '#f5f5f5', minHeight: '100vh' }}>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'flex-start',
-          maxWidth: 1200,
-          margin: '0 auto',
-          gap: 32,
-        }}
-      >
+    <main className={styles.main}>
+      <div className={styles.layout}>
         <CartList items={cart} onQuantityChange={handleQuantityChange} onRemove={handleRemove} />
         <CartSidebar total={total} onCheckout={handleCheckout} />
       </div>

@@ -1,4 +1,3 @@
-import React from 'react';
 import Card from '../atoms/Card';
 import ProductInfo from './ProductInfo';
 import QuantitySelector from './QuantitySelector';

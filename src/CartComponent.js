@@ -1,5 +1,3 @@
-import React from 'react';
-
 function CartComponent() {
   return (
     <div className="CartComponent">

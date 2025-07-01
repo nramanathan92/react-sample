@@ -1,4 +1,3 @@
-import React from 'react';
 import CartItem from '../molecules/CartItem';
 import Text from '../atoms/Text';
 import styles from './CartList.module.css';

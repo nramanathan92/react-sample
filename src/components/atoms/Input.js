@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './Input.module.css';
 
 const Input = ({ id, label, type = 'text', value, onChange, min, max, step, className, ...rest }) => (

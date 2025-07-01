@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './Text.module.css';
 
 const Text = ({ as: Component = 'span', children, className = '', ...rest }) => {
