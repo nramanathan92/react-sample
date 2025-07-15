@@ -6,7 +6,8 @@ const QuantitySelector = ({ quantity, onDecrease, onIncrease, onChange, min = 1,
   <div className={styles.container} role="group" aria-label="Quantity selector">
     <Button ariaLabel="Decrease quantity" onClick={onDecrease} disabled={quantity <= min}>−</Button>
     <Input
-      type="number"
+      type="select"
+      options={[{ value: '1', label: '1' }, { value: '2', label: '2' }, { value: '3', label: '3' }]}
       value={quantity}
       onChange={onChange}
       min={min}

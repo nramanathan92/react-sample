@@ -1,23 +1,25 @@
 import styles from './Input.module.css';
+import PropTypes from 'prop-types';
 
-const Input = ({ id, label, type = 'text', value, onChange, min, max, step, className, ...rest }) => (
-  <div>
-    {label && (
-      <label htmlFor={id} style={{ display: 'none' }}>{label}</label>
-    )}
-    <input
-      id={id}
-      type={type}
-      value={value}
-      onChange={onChange}
-      min={min}
-      max={max}
-      step={step}
-      aria-label={label}
-      className={`${styles.input}${className ? ` ${className}` : ''}`}
-      {...rest}
-    />
+/**
+ * Input wrapper component using the composition pattern.
+ *
+ * Usage:
+ * <Input className="...">
+ *   <input ... />
+ *   <select ... />
+ *   ...any children
+ * </Input>
+ */
+const Input = ({ children, className }) => (
+  <div className={`${styles.input}${className ? ` ${className}` : ''}`}>
+    {children}
   </div>
 );
+
+Input.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+};
 
 export default Input; 
