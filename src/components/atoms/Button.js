@@ -1,6 +1,8 @@
+import React from 'react';
+import withCustomRender from '../../withCustomRender';
 import styles from './Button.module.css';
 
-const Button = ({ children, onClick, type = 'button', ariaLabel, disabled, className }) => (
+const Button = ({ children, onClick, type = 'button', ariaLabel, disabled, className, label }) => (
   <button
     type={type}
     onClick={onClick}
@@ -8,8 +10,8 @@ const Button = ({ children, onClick, type = 'button', ariaLabel, disabled, class
     disabled={disabled}
     className={`${styles.button}${className ? ` ${className}` : ''}`}
   >
-    {children}
+    {label ?? children}
   </button>
 );
 
-export default Button; 
+export default withCustomRender(Button); 
