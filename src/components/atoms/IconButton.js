@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './IconButton.module.css';
 
 const IconButton = ({ icon, ariaLabel, onClick, className, ...rest }) => (

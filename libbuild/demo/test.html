@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MyButton UMD Test</title>
+  <!-- <script src="../dist/sf-button.js"></script> -->
+  <script src="../dist/sf-cart-page.js"></script>
+  <script>
+    function init() {
+      console.log(SFCartPage);
+      // SFButton?.render({
+      //   container: document.getElementById('button1'),
+      //   label: 'My Button',
+      //   onClick: () => alert('Button clickedeeee!'),
+      //   // customRender: (props, element) => {
+      //   //   console.log('Custom render called with props:', props);
+      //   //   const button = document.createElement('button');
+      //   //   button.textContent = props.label + 'crrrr';
+      //   //   button.onclick = () => alert('asdasdsad clickedeeee!');
+      //   //   element.replaceWith(button);
+      //   // },
+      // });
+
+      // Mock data for demonstration
+      const initialCart = [
+        {
+          id: 1,
+          product: {
+            name: 'Product 1',
+            link: '#',
+            imageSrc: 'https://via.placeholder.com/120x120/4caf50/ffffff?text=Product+1',
+            imageAlt: 'Product 1',
+            price: '10.99',
+          },
+          quantity: 4,
+        },
+        {
+          id: 2,
+          product: {
+            name: 'Product 1',
+            link: '#',
+            imageSrc: 'https://via.placeholder.com/120x120/4caf50/ffffff?text=Product+1',
+            imageAlt: 'Product 1',
+            price: '10.99',
+          },
+          quantity: 1,
+        },
+        {
+          id: 3,
+          product: {
+            name: 'Product 2',
+            link: '#',
+            imageSrc: 'https://via.placeholder.com/120x120/2196f3/ffffff?text=Product+2',
+            imageAlt: 'Product 2',
+            price: '20.99',
+          },
+          quantity: 1,
+        },
+      ];
+
+      SFCartPage?.render({
+        container: document.getElementById('cart1'),
+        cart: initialCart,
+        onQuantityChange: ()=>{ console.log('Quantity changed'); },
+        onRemove: ()=>{ console.log('onRemove'); },
+        onCheckout: ()=>{ console.log('onCheckout'); },
+        // onClick: () => alert('Button clickedeeee!'),
+        // customRender: (props, element) => {
+        //   console.log('Custom render called with props:', props);
+        //   const button = document.createElement('button');
+        //   button.textContent = props.label + 'crrrr';
+        //   button.onclick = () => alert('asdasdsad clickedeeee!');
+        //   element.replaceWith(button);
+        // },
+      });
+    }
+  </script>
+</head>
+<body onload="init()">
+  <div id="button1"></div>
+  <div id="cart1"></div>
+</body>
+</html> 

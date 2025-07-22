@@ -1,6 +1,8 @@
+import React from 'react';
 import styles from './CartPage.module.css';
 import CartList from './components/organisms/CartList';
 import CartSidebar from './components/organisms/CartSidebar';
+import withCustomRender from './withCustomRender';
 
 const CartPage = ({ cart, onQuantityChange, onRemove, onCheckout }) => {
   const total = cart
@@ -17,4 +19,4 @@ const CartPage = ({ cart, onQuantityChange, onRemove, onCheckout }) => {
   );
 };
 
-export default CartPage;
+export default withCustomRender(CartPage);

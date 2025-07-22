@@ -1,3 +1,4 @@
+import React from 'react';
 import CartSummary from '../molecules/CartSummary';
 import styles from './CartSidebar.module.css';
 
