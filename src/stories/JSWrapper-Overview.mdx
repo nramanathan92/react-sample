@@ -1,0 +1,108 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="JSWrapper/Overview" />
+
+# JavaScript Wrapper Components
+
+The JSWrapper components provide a bridge between your React components and vanilla JavaScript environments. These wrappers are designed for UMD (Universal Module Definition) builds that can be consumed by any JavaScript application, regardless of framework.
+
+## How It Works
+
+Each wrapper component provides a `render` function that:
+1. Takes a `container` DOM element
+2. Accepts component props as additional parameters
+3. Uses React's `createRoot` to mount the component into the container
+
+## Usage Example
+
+Here's how you would use these wrappers in a vanilla JavaScript environment:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="path/to/sf-cart-page.js"></script>
+</head>
+<body>
+  <div id="cart-container"></div>
+  
+  <script>
+    // Mock cart data
+    const cartData = [
+      {
+        id: 1,
+        product: {
+          name: 'Product 1',
+          link: '#',
+          imageSrc: 'https://via.placeholder.com/120x120',
+          imageAlt: 'Product 1',
+          price: '10.99',
+        },
+        quantity: 2,
+      }
+    ];
+
+    // Render the cart page
+    SFCartPage.render({
+      container: document.getElementById('cart-container'),
+      cart: cartData,
+      onQuantityChange: (itemId, newQuantity) => {
+        console.log('Quantity changed:', itemId, newQuantity);
+      },
+      onRemove: (itemId) => {
+        console.log('Item removed:', itemId);
+      },
+      onCheckout: () => {
+        console.log('Checkout clicked');
+      }
+    });
+  </script>
+</body>
+</html>
+```
+
+## Available Wrappers
+
+### Button Wrapper
+- **File**: `libbuild/jswrapper/Button.js`
+- **Global**: `SFButton` (when built as UMD)
+- **Props**: All Button component props (label, onClick, type, disabled, etc.)
+
+### CartPage Wrapper
+- **File**: `libbuild/jswrapper/CartPage.js`
+- **Global**: `SFCartPage` (when built as UMD)
+- **Props**: All CartPage component props (cart, onQuantityChange, onRemove, onCheckout)
+
+## Build Process
+
+These wrappers are processed by Webpack to create UMD bundles:
+
+```bash
+npm run build:lib
+```
+
+This generates:
+- `libbuild/dist/sf-button.js` - Button UMD bundle
+- `libbuild/dist/sf-cart-page.js` - CartPage UMD bundle
+
+## Benefits
+
+1. **Framework Agnostic**: Can be used in any JavaScript environment
+2. **Easy Integration**: Simple API for existing applications
+3. **React Benefits**: Full React component functionality with external simplicity
+4. **Type Safety**: TypeScript support during development
+5. **Modern Features**: Uses latest React features like createRoot
+
+## Integration Examples
+
+### E-commerce Platform
+Add cart functionality to existing e-commerce sites without framework migration.
+
+### CMS Integration
+Embed React components in WordPress, Drupal, or other CMS platforms.
+
+### Legacy Applications
+Modernize legacy applications by adding React components incrementally.
+
+### Third-party Widgets
+Distribute components as embeddable widgets for other websites.

@@ -24,12 +24,15 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build:lib": "webpack --config ./libbuild/webpack.config.js --mode=production",
-    "demo": "http-server ./libbuild -o /demo/test.html"
+    "demo": "http-server ./libbuild -o /demo/test.html",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:storybook/recommended"
     ]
   },
   "browserslist": {
@@ -45,6 +48,13 @@
     ]
   },
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "@storybook/addon-docs": "^9.0.17",
+    "@storybook/addon-onboarding": "^9.0.17",
+    "@storybook/preset-create-react-app": "^9.0.17",
+    "@storybook/react-webpack5": "^9.0.17",
+    "eslint-plugin-storybook": "^9.0.17",
+    "http-server": "^14.1.1",
+    "prop-types": "^15.8.1",
+    "storybook": "^9.0.17"
   }
 }
