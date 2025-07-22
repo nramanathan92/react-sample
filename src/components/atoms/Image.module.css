@@ -1,0 +1,7 @@
+.image {
+  border-radius: var(--radius);
+  object-fit: cover;
+  width: 120px;
+  height: 120px;
+  background: var(--color-border);
+} 
