@@ -10,6 +10,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "babel-loader": "^9.0.0",
+    "http-server": "^14.1.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3",
@@ -23,7 +24,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build:lib": "webpack --config ./libbuild/webpack.config.js --mode=production"
+    "build:lib": "webpack --config ./libbuild/webpack.config.js --mode=production",
+    "demo": "http-server ./libbuild -o /demo/test.html"
   },
   "eslintConfig": {
     "extends": [
