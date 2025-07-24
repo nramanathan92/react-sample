@@ -1,3 +1,26 @@
+# React Sample Project
+
+## Bun Usage
+
+This project uses [Bun](https://bun.sh/) as the preferred package manager.
+
+- Install dependencies:
+  ```sh
+  bun install
+  ```
+- Run scripts (replace <script> with the script name, e.g., start, build, test):
+  ```sh
+  bun run <script>
+  ```
+  Example:
+  ```sh
+  bun run start
+  ```
+
+If you don't have Bun installed, follow the instructions at [https://bun.sh/](https://bun.sh/).
+
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
