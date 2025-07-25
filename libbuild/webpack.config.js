@@ -1,11 +1,11 @@
 const path = require('path');
 
 module.exports = {
-  entry: './libbuild/jswrapper/CartPage.js',
+  entry: './libbuild/jswrapper/PLP.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'sf-cart-page.js',
-    library: 'SFCartPage',
+    filename: 'sf-plp.js',
+    library: 'SFplp',
     libraryTarget: 'var',
     globalObject: 'this',
   },

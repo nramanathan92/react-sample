@@ -65,13 +65,25 @@
         onRemove: ()=>{ console.log('onRemove'); },
         onCheckout: ()=>{ console.log('onCheckout'); },
         // onClick: () => alert('Button clickedeeee!'),
-        // customRender: (props, element) => {
-        //   console.log('Custom render called with props:', props);
-        //   const button = document.createElement('button');
-        //   button.textContent = props.label + 'crrrr';
-        //   button.onclick = () => alert('asdasdsad clickedeeee!');
-        //   element.replaceWith(button);
-        // },
+        afterDecorate: (props, element) => {
+          console.log('Custom render called with props:', element);
+
+          element.querySelectorAll('.cart-item').forEach(item => {
+            // create dive element with text
+            const customText = document.createElement('div');
+            customText.innerText = 'Custom text added after decoration'
+            customText.style.color = 'red';
+            customText.style.fontWeight = 'bold';
+            customText.style.marginTop = '10px';
+            customText.style.fontSize = '14px';
+
+            item.querySelector('.product-info__details').appendChild(customText);
+          });
+          // const button = document.createElement('button');
+          // button.textContent = props.label + 'crrrr';
+          // button.onclick = () => alert('asdasdsad clickedeeee!');
+          // element.replaceWith(button);
+        },
       });
     }
   </script>

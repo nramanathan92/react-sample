@@ -23,10 +23,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build:lib": "webpack --config ./libbuild/webpack.config.js --mode=production",
+    "build:lib": "webpack --config ./libbuild/webpack.config.js --mode=development",
     "demo": "http-server ./libbuild -o /demo/test.html",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "storybook:demo": "http-server ./storybook-static -o /index.html"
   },
   "eslintConfig": {
     "extends": [

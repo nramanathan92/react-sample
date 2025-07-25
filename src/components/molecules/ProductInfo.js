@@ -5,9 +5,9 @@ import Link from '../atoms/Link';
 import styles from './ProductInfo.module.css';
 
 const ProductInfo = ({ imageSrc, imageAlt, name, link, price }) => (
-  <div className={styles.container}>
+  <div className={`${styles.container} product-info`}>
     <Image src={imageSrc} alt={imageAlt} width={120} height={120} style={{ objectFit: 'cover' }} onError={e => { e.target.onerror = null; e.target.src = 'https://dummyimage.com/120x120/cccccc/000000&text=No+Image'; }} />
-    <div className={styles.info}>
+    <div className={`${styles.info} product-info__details`}>
       <Text as="h2">
         <Link href={link}>{name}</Link>
       </Text>

@@ -2,19 +2,19 @@ import React, { use, useEffect, useRef } from "react";
 
 const withCustomRender = (WrappedComponent) => {
   return (props) => {
-    const { customRender } = props;
-    const containerRef = useRef(null);
+    const { afterDecorate, ...restProps } = props;
+    const wrappedRef = useRef(null);
 
     useEffect(() => {
-      if (containerRef.current && typeof customRender === 'function') {
-        customRender(props, containerRef.current);
+      if (typeof afterDecorate === 'function') {
+        const element = wrappedRef.current;
+        if (element) {
+          afterDecorate(restProps, element);
+        }
       }
-    }, [customRender, props]);
+    }, [afterDecorate, restProps]);
    
-    if (typeof customRender === 'function') {
-      return <div ref={containerRef}></div>;
-    }
-    return <WrappedComponent {...props} />;
+    return <div ref={wrappedRef}><WrappedComponent {...restProps} /></div>;
   };
 };
 

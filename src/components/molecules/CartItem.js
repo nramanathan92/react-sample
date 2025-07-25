@@ -6,7 +6,7 @@ import IconButton from '../atoms/IconButton';
 import styles from './CartItem.module.css';
 
 const CartItem = ({ product, quantity, onDecrease, onIncrease, onQuantityChange, onRemove }) => (
-  <Card className={styles.container}>
+  <Card className={`${styles.container} cart-item`}>
     <ProductInfo
       imageSrc={product.imageSrc}
       imageAlt={product.imageAlt}

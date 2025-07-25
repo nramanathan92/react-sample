@@ -4,7 +4,7 @@ import Input from '../atoms/Input';
 import styles from './QuantitySelector.module.css';
 
 const QuantitySelector = ({ quantity, onDecrease, onIncrease, onChange, min = 1, max = 99 }) => (
-  <div className={styles.container} role="group" aria-label="Quantity selector">
+  <div className={`${styles.container} quantity-selector`} role="group" aria-label="Quantity selector">
     <Button ariaLabel="Decrease quantity" onClick={onDecrease} disabled={quantity <= min}>−</Button>
     <Input
       type="number"
