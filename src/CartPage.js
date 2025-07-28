@@ -2,9 +2,12 @@ import React from 'react';
 import styles from './CartPage.module.css';
 import CartList from './components/organisms/CartList';
 import CartSidebar from './components/organisms/CartSidebar';
+import { useCartStore } from './store/cartStore';
 import withCustomRender from './withCustomRender';
 
-const CartPage = ({ cart, onQuantityChange, onRemove, onCheckout }) => {
+const CartPage = () => {
+  const { cart, handleCheckout } = useCartStore();
+  
   const total = cart
     .reduce((sum, item) => sum + parseFloat(item.product.price) * item.quantity, 0)
     .toFixed(2);
@@ -12,8 +15,8 @@ const CartPage = ({ cart, onQuantityChange, onRemove, onCheckout }) => {
   return (
     <main className={styles.main}>
       <div className={styles.layout}>
-        <CartList items={cart} onQuantityChange={onQuantityChange} onRemove={onRemove} />
-        <CartSidebar total={total} onCheckout={onCheckout} />
+        <CartList />
+        <CartSidebar total={total} onCheckout={handleCheckout} />
       </div>
     </main>
   );

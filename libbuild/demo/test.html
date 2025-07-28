@@ -58,13 +58,15 @@
         },
       ];
 
+      // Initialize the Zustand store with the cart data
+      if (window.cartStore) {
+        window.cartStore.initializeCart(initialCart);
+        console.log('Cart initialized in Zustand store:', window.cartStore.getCart());
+      }
+
       SFCartPage?.render({
         container: document.getElementById('cart1'),
-        cart: initialCart,
-        onQuantityChange: ()=>{ console.log('Quantity changed'); },
-        onRemove: ()=>{ console.log('onRemove'); },
-        onCheckout: ()=>{ console.log('onCheckout'); },
-        // onClick: () => alert('Button clickedeeee!'),
+        // Cart data and callbacks are now handled by Zustand store
         afterDecorate: (props, element) => {
           console.log('Custom render called with props:', element);
 
@@ -79,10 +81,6 @@
 
             item.querySelector('.product-info__details').appendChild(customText);
           });
-          // const button = document.createElement('button');
-          // button.textContent = props.label + 'crrrr';
-          // button.onclick = () => alert('asdasdsad clickedeeee!');
-          // element.replaceWith(button);
         },
       });
     }
