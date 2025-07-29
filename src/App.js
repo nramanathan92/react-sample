@@ -1,10 +1,7 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import logo from './logo.svg';
 import './App.css';
-import Cart from './Cart';
 import CartPage from './CartPage';
-import { useState } from 'react';
+import { useCartStore } from './store/cartStore';
+import { useEffect } from 'react';
 
 // Mock data for demonstration
 const initialCart = [
@@ -43,47 +40,13 @@ const initialCart = [
   },
 ];
 
-function Home() {
-  return (
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React !!TEST
-      </a>
-      <br />
-      <Link to="/cart">Go to Cart</Link>
-    </header>
-  );
-}
-
 function App() {
-  const [cart, setCart] = useState(initialCart);
-
-  const handleQuantityChange = (id, newQuantity) => {
-    setCart(cart =>
-      cart.map(item =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, Math.min(newQuantity, 99)) }
-          : item
-      )
-    );
-  };
-
-  const handleRemove = id => {
-    setCart(cart => cart.filter(item => item.id !== id));
-  };
-
-  const handleCheckout = () => {
-    alert('Proceeding to checkout!');
-  };
+  const { cart, handleQuantityChange, handleRemove, handleCheckout, initializeCart } = useCartStore();
+  
+  // Initialize cart on component mount
+  useEffect(() => {
+    initializeCart(initialCart);
+  }, [initializeCart]);
 
   return (
     <CartPage
