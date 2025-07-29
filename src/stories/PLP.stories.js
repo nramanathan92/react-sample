@@ -8,23 +8,27 @@ export default {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: 'Product Listing Page (PLP) component following Adobe Commerce (Magento) schema. Supports filtering, sorting, pagination, and follows e-commerce best practices.',
+        component: 'Product Listing Page (PLP) component with integrated Adobe Commerce Catalog Service data fetching. Supports store configuration, search parameters, filtering, sorting, and pagination.',
       },
     },
   },
   tags: ['autodocs'],
   argTypes: {
+    storeConfig: { control: 'object' },
+    searchPhrase: { control: 'text' },
+    categoryPath: { control: 'text' },
     onAddToCart: { action: 'add-to-cart' },
     onFilterChange: { action: 'filter-changed' },
     onSortChange: { action: 'sort-changed' },
     onPageChange: { action: 'page-changed' },
+    onDataLoaded: { action: 'data-loaded' },
     categoryName: { control: 'text' },
     currentPage: { control: { type: 'number', min: 1 } },
     pageSize: { control: { type: 'number', min: 1, max: 50 } },
     loading: { control: 'boolean' },
     currentSort: { 
       control: 'select',
-      options: ['position', 'name', 'price', 'created_at', 'rating_summary']
+      options: ['position', 'name', 'price', 'created_at']
     },
   },
   args: {
@@ -32,6 +36,7 @@ export default {
     onFilterChange: fn(),
     onSortChange: fn(),
     onPageChange: fn(),
+    onDataLoaded: fn(),
   },
 };
 
@@ -268,13 +273,108 @@ const mockFilters = [
   }
 ];
 
-export const Default = {
+export const WithStoreConfig = {
   args: {
-    products: mockProducts,
-    filters: mockFilters,
+    storeConfig: {
+      apiUrl: 'https://catalog-service-sandbox.adobe.io/graphql',
+      apiKey: 'storefront-widgets',
+      customerGroup: 'b6589fc6ab0dc82cf12099d1c2d40ab994e8410c',
+      environmentId: '4187a815-e8da-4bee-9d33-8ab1ddd36f77',
+      storeCode: 'main_website_store',
+      storeViewCode: 'default',
+      websiteCode: 'base'
+    },
+    searchPhrase: '',
+    categoryPath: 'cat001',
+    initialFilters: [
+      { attribute: "visibility", in: ["Catalog", "Catalog, Search"] },
+      { attribute: "inStock", eq: "true" }
+    ],
     currentPage: 1,
     pageSize: 12,
-    totalCount: mockProducts.length,
+    currentSort: 'position',
+    categoryName: 'Electronics (Live Data)',
+    selectedFilters: {},
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'This story demonstrates the PLP component fetching real data from Adobe Commerce Catalog Service using store configuration. Note: This will make actual API calls.',
+      },
+    },
+  },
+};
+
+export const WithSearchPhrase = {
+  args: {
+    storeConfig: {
+      apiUrl: 'https://catalog-service-sandbox.adobe.io/graphql',
+      apiKey: 'storefront-widgets'
+    },
+    searchPhrase: 'preset',
+    categoryPath: '',
+    currentPage: 1,
+    pageSize: 12,
+    currentSort: 'position',
+    categoryName: 'Search Results for "preset"',
+    selectedFilters: {},
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'This story shows the PLP component performing a search query for products matching "preset".',
+      },
+    },
+  },
+};
+
+export const Default = {
+  args: {
+    productSearchData: {
+      total_count: mockProducts.length,
+      items: mockProducts.map(product => ({
+        product: product,
+        productView: {
+          "__typename": "SimpleProductView",
+          sku: product.sku,
+          name: product.name,
+          inStock: product.stock_status !== 'OUT_OF_STOCK',
+          urlKey: product.url_key,
+          images: product.image ? [{
+            label: product.image.label,
+            url: product.image.url,
+            roles: ["main"]
+          }] : [],
+          price: {
+            final: { amount: { value: product.special_price || product.price_range?.minimum_price?.final_price?.value || product.price, currency: "USD" } },
+            regular: { amount: { value: product.price_range?.minimum_price?.regular_price?.value || product.price, currency: "USD" } }
+          }
+        },
+        highlights: []
+      })),
+      facets: mockFilters.map(filter => ({
+        title: filter.label,
+        attribute: filter.attribute_code,
+        buckets: filter.options.map(option => ({
+          __typename: "ScalarBucket",
+          title: option.label,
+          count: option.count
+        }))
+      })),
+      page_info: {
+        current_page: 1,
+        page_size: 12,
+        total_pages: 1
+      }
+    },
+    attributeMetadata: {
+      sortable: [
+        { label: "Position", attribute: "position", numeric: false },
+        { label: "Product Name", attribute: "name", numeric: false },
+        { label: "Price", attribute: "price", numeric: true },
+        { label: "Newest", attribute: "created_at", numeric: false }
+      ]
+    },
     categoryName: 'Electronics',
     selectedFilters: {},
     currentSort: 'position',
@@ -283,11 +383,49 @@ export const Default = {
 
 export const WithFiltersApplied = {
   args: {
-    products: mockProducts.slice(0, 4),
-    filters: mockFilters,
-    currentPage: 1,
-    pageSize: 12,
-    totalCount: 4,
+    productSearchData: {
+      total_count: 4,
+      items: mockProducts.slice(0, 4).map(product => ({
+        product: product,
+        productView: {
+          "__typename": "SimpleProductView",
+          sku: product.sku,
+          name: product.name,
+          inStock: product.stock_status !== 'OUT_OF_STOCK',
+          urlKey: product.url_key,
+          images: product.image ? [{
+            label: product.image.label,
+            url: product.image.url,
+            roles: ["main"]
+          }] : [],
+          price: {
+            final: { amount: { value: product.special_price || product.price_range?.minimum_price?.final_price?.value || product.price, currency: "USD" } },
+            regular: { amount: { value: product.price_range?.minimum_price?.regular_price?.value || product.price, currency: "USD" } }
+          }
+        },
+        highlights: []
+      })),
+      facets: mockFilters.map(filter => ({
+        title: filter.label,
+        attribute: filter.attribute_code,
+        buckets: filter.options.map(option => ({
+          __typename: "ScalarBucket",
+          title: option.label,
+          count: option.count
+        }))
+      })),
+      page_info: {
+        current_page: 1,
+        page_size: 12,
+        total_pages: 1
+      }
+    },
+    attributeMetadata: {
+      sortable: [
+        { label: "Position", attribute: "position", numeric: false },
+        { label: "Price", attribute: "price", numeric: true }
+      ]
+    },
     categoryName: 'Gaming Accessories',
     selectedFilters: {
       category_id: ['3'],
@@ -299,11 +437,29 @@ export const WithFiltersApplied = {
 
 export const EmptyResults = {
   args: {
-    products: [],
-    filters: mockFilters,
-    currentPage: 1,
-    pageSize: 12,
-    totalCount: 0,
+    productSearchData: {
+      total_count: 0,
+      items: [],
+      facets: mockFilters.map(filter => ({
+        title: filter.label,
+        attribute: filter.attribute_code,
+        buckets: filter.options.map(option => ({
+          __typename: "ScalarBucket",
+          title: option.label,
+          count: option.count
+        }))
+      })),
+      page_info: {
+        current_page: 1,
+        page_size: 12,
+        total_pages: 0
+      }
+    },
+    attributeMetadata: {
+      sortable: [
+        { label: "Position", attribute: "position", numeric: false }
+      ]
+    },
     categoryName: 'Search Results',
     selectedFilters: {
       brand: ['nonexistent']

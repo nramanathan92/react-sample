@@ -247,11 +247,50 @@ const mockFilters = [
 export const Default = {
   render: JSWrapperDemo,
   args: {
-    products: mockProducts,
-    filters: mockFilters,
-    currentPage: 1,
-    pageSize: 12,
-    totalCount: mockProducts.length,
+    productSearchData: {
+      total_count: mockProducts.length,
+      items: mockProducts.map(product => ({
+        product: product,
+        productView: {
+          "__typename": "SimpleProductView",
+          sku: product.sku,
+          name: product.name,
+          inStock: product.stock_status !== 'OUT_OF_STOCK',
+          urlKey: product.url_key,
+          images: product.image ? [{
+            label: product.image.label,
+            url: product.image.url,
+            roles: ["main"]
+          }] : [],
+          price: {
+            final: { amount: { value: product.special_price || product.price_range?.minimum_price?.final_price?.value || product.price, currency: "USD" } },
+            regular: { amount: { value: product.price_range?.minimum_price?.regular_price?.value || product.price, currency: "USD" } }
+          }
+        },
+        highlights: []
+      })),
+      facets: mockFilters.map(filter => ({
+        title: filter.label,
+        attribute: filter.attribute_code,
+        buckets: filter.options.map(option => ({
+          __typename: "ScalarBucket",
+          title: option.label,
+          count: option.count
+        }))
+      })),
+      page_info: {
+        current_page: 1,
+        page_size: 12,
+        total_pages: 1
+      }
+    },
+    attributeMetadata: {
+      sortable: [
+        { label: "Position", attribute: "position", numeric: false },
+        { label: "Product Name", attribute: "name", numeric: false },
+        { label: "Price", attribute: "price", numeric: true }
+      ]
+    },
     categoryName: 'Electronics',
     selectedFilters: {},
     currentSort: 'position',

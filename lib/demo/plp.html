@@ -94,12 +94,13 @@
     function logEvent(type, data) {
       eventCounter++;
       const timestamp = new Date().toLocaleTimeString();
-      const eventLog = document.getElementById('event-log');
-      const eventDiv = document.createElement('div');
-      eventDiv.className = `event ${type}`;
-      eventDiv.innerHTML = `[${timestamp}] #${eventCounter} ${type.toUpperCase()}: ${JSON.stringify(data)}`;
-      eventLog.appendChild(eventDiv);
-      eventLog.scrollTop = eventLog.scrollHeight;
+      // const eventLog = document.getElementById('event-log');
+      // const eventDiv = document.createElement('div');
+      // eventDiv.className = `event ${type}`;
+      // eventDiv.innerHTML = `[${timestamp}] #${eventCounter} ${type.toUpperCase()}: ${JSON.stringify(data)}`;
+      // eventLog.appendChild(eventDiv);
+      // eventLog.scrollTop = eventLog.scrollHeight;
+      console.log(`event ${type}`,`[${timestamp}] #${eventCounter} ${type.toUpperCase()}: ${JSON.stringify(data)}`)
     }
 
     function clearEventLog() {
@@ -110,384 +111,193 @@
     function init() {
       console.log('PLP Demo initialized', SFPLP);
 
-      // Mock product data following Magento schema
-      const mockProducts = [
-        {
-            "__typename": "SimpleProduct",
-                        "sku": "Preset003",
-                        "description": {
-                            "html": ""
-                        },
-                        "short_description": {
-                            "html": ""
-                        },
-                        "name": "Preset003",
-                        "canonical_url": "//edscommerce-nivnixq-mxyxl2utaq3qy.ap-4.magentosite.cloud/preset003.html",
-                        "small_image": {
-                            "url": "//edscommerce-nivnixq-mxyxl2utaq3qy.ap-4.magentosite.cloud/media/catalog/product/p/r/pre_set3.jpeg"
-                        },
-                        "image": {
-                            "url": "//edscommerce-nivnixq-mxyxl2utaq3qy.ap-4.magentosite.cloud/media/catalog/product/p/r/pre_set3_ps.png"
-                        },
-                        "thumbnail": {
-                            "url": "//edscommerce-nivnixq-mxyxl2utaq3qy.ap-4.magentosite.cloud/media/catalog/product/p/r/pre_set3.jpeg"
-                        },
-                        "price_range": {
-                            "minimum_price": {
-                                "fixed_product_taxes": null,
-                                "regular_price": {
-                                    "value": 50.0,
-                                    "currency": "USD"
-                                },
-                                "final_price": {
-                                    "value": 50.0,
-                                    "currency": "USD"
-                                },
-                                "discount": null
-                            },
-                            "maximum_price": {
-                                "fixed_product_taxes": null,
-                                "regular_price": {
-                                    "value": 50.0,
-                                    "currency": "USD"
-                                },
-                                "final_price": {
-                                    "value": 50.0,
-                                    "currency": "USD"
-                                },
-                                "discount": null
-                            }
-                        }
-        },
-        {
-          id: 2,
-          sku: 'SW-WATCH-001',
-          name: 'Smart Watch Series X',
-          url_key: 'smart-watch-series-x',
-          price: 249.99,
-          image: {
-            url: 'https://via.placeholder.com/280x280/2196f3/ffffff?text=Watch',
-            label: 'Smart Watch Series X'
-          },
-          small_image: {
-            url: 'https://via.placeholder.com/280x280/2196f3/ffffff?text=Watch',
-            label: 'Smart Watch Series X'
-          },
-          price_range: {
-            minimum_price: {
-              regular_price: { value: 249.99 },
-              final_price: { value: 249.99 }
-            }
-          },
-          rating_summary: 90,
-          review_count: 128,
-          stock_status: 'IN_STOCK'
-        },
-        {
-          id: 3,
-          sku: 'BT-SPEAKER-001',
-          name: 'Bluetooth Speaker Pro',
-          url_key: 'bluetooth-speaker-pro',
-          price: 59.99,
-          image: {
-            url: 'https://via.placeholder.com/280x280/ff9800/ffffff?text=Speaker',
-            label: 'Bluetooth Speaker Pro'
-          },
-          small_image: {
-            url: 'https://via.placeholder.com/280x280/ff9800/ffffff?text=Speaker',
-            label: 'Bluetooth Speaker Pro'
-          },
-          price_range: {
-            minimum_price: {
-              regular_price: { value: 59.99 },
-              final_price: { value: 59.99 }
-            }
-          },
-          rating_summary: 78,
-          review_count: 67,
-          stock_status: 'IN_STOCK'
-        },
-        {
-          id: 4,
-          sku: 'GM-MOUSE-001',
-          name: 'Gaming Mouse RGB',
-          url_key: 'gaming-mouse-rgb',
-          price: 79.99,
-          special_price: 59.99,
-          image: {
-            url: 'https://via.placeholder.com/280x280/9c27b0/ffffff?text=Mouse',
-            label: 'Gaming Mouse RGB'
-          },
-          small_image: {
-            url: 'https://via.placeholder.com/280x280/9c27b0/ffffff?text=Mouse',
-            label: 'Gaming Mouse RGB'
-          },
-          price_range: {
-            minimum_price: {
-              regular_price: { value: 79.99 },
-              final_price: { value: 59.99 }
-            }
-          },
-          rating_summary: 82,
-          review_count: 94,
-          stock_status: 'IN_STOCK'
-        },
-        {
-          id: 5,
-          sku: 'KB-MECH-001',
-          name: 'Mechanical Keyboard',
-          url_key: 'mechanical-keyboard',
-          price: 129.99,
-          image: {
-            url: 'https://via.placeholder.com/280x280/f44336/ffffff?text=Keyboard',
-            label: 'Mechanical Keyboard'
-          },
-          small_image: {
-            url: 'https://via.placeholder.com/280x280/f44336/ffffff?text=Keyboard',
-            label: 'Mechanical Keyboard'
-          },
-          price_range: {
-            minimum_price: {
-              regular_price: { value: 129.99 },
-              final_price: { value: 129.99 }
-            }
-          },
-          rating_summary: 95,
-          review_count: 156,
-          stock_status: 'IN_STOCK'
-        },
-        {
-          id: 6,
-          sku: 'LP-GAMING-001',
-          name: 'Gaming Laptop Ultra',
-          url_key: 'gaming-laptop-ultra',
-          price: 1599.99,
-          image: {
-            url: 'https://via.placeholder.com/280x280/607d8b/ffffff?text=Laptop',
-            label: 'Gaming Laptop Ultra'
-          },
-          small_image: {
-            url: 'https://via.placeholder.com/280x280/607d8b/ffffff?text=Laptop',
-            label: 'Gaming Laptop Ultra'
-          },
-          price_range: {
-            minimum_price: {
-              regular_price: { value: 1599.99 },
-              final_price: { value: 1599.99 }
-            }
-          },
-          rating_summary: 88,
-          review_count: 73,
-          stock_status: 'IN_STOCK'
-        },
-        {
-          id: 7,
-          sku: 'TB-GRAPHICS-001',
-          name: 'Graphics Tablet Pro',
-          url_key: 'graphics-tablet-pro',
-          price: 199.99,
-          image: {
-            url: 'https://via.placeholder.com/280x280/795548/ffffff?text=Tablet',
-            label: 'Graphics Tablet Pro'
-          },
-          small_image: {
-            url: 'https://via.placeholder.com/280x280/795548/ffffff?text=Tablet',
-            label: 'Graphics Tablet Pro'
-          },
-          price_range: {
-            minimum_price: {
-              regular_price: { value: 199.99 },
-              final_price: { value: 199.99 }
-            }
-          },
-          rating_summary: 91,
-          review_count: 28,
-          stock_status: 'LOW_STOCK'
-        },
-        {
-          id: 8,
-          sku: 'CM-WEBCAM-001',
-          name: '4K Webcam',
-          url_key: '4k-webcam',
-          price: 89.99,
-          image: {
-            url: 'https://via.placeholder.com/280x280/3f51b5/ffffff?text=Webcam',
-            label: '4K Webcam'
-          },
-          small_image: {
-            url: 'https://via.placeholder.com/280x280/3f51b5/ffffff?text=Webcam',
-            label: '4K Webcam'
-          },
-          price_range: {
-            minimum_price: {
-              regular_price: { value: 89.99 },
-              final_price: { value: 89.99 }
-            }
-          },
-          rating_summary: 76,
-          review_count: 89,
-          stock_status: 'OUT_OF_STOCK'
-        }
-      ];
+      // Load configuration from configs.json
+      fetch('./configs.json')
+        .then(response => response.json())
+        .then(config => {
+          const storeConfig = config.storeConfig;
+          const searchConfig = config.searchConfig;
 
-      // Mock filters following Magento layered navigation schema
-      const mockFilters = [
-        {
-          attribute_code: 'category_id',
-          label: 'Category',
-          options: [
-            { value: '1', label: 'Electronics', count: 15 },
-            { value: '2', label: 'Audio', count: 8 },
-            { value: '3', label: 'Gaming', count: 12 },
-            { value: '4', label: 'Computers', count: 6 }
-          ]
-        },
-        {
-          attribute_code: 'price',
-          label: 'Price Range',
-          options: [
-            { value: '0-50', label: 'Under $50', count: 3 },
-            { value: '50-100', label: '$50 - $100', count: 12 },
-            { value: '100-200', label: '$100 - $200', count: 8 },
-            { value: '200-500', label: '$200 - $500', count: 4 },
-            { value: '500+', label: '$500+', count: 2 }
-          ]
-        },
-        {
-          attribute_code: 'brand',
-          label: 'Brand',
-          options: [
-            { value: 'techcorp', label: 'TechCorp', count: 12 },
-            { value: 'gamertech', label: 'GamerTech', count: 8 },
-            { value: 'audiomax', label: 'AudioMax', count: 6 },
-            { value: 'prodevices', label: 'ProDevices', count: 4 }
-          ]
-        }
-      ];
+          console.log('Store config loaded from configs.json:', storeConfig);
+          console.log('Search config loaded from configs.json:', searchConfig);
 
-      // Render the PLP component
-      SFPLP?.render({
-        container: document.getElementById('plp-container'),
-        products: mockProducts,
-        filters: mockFilters,
-        currentPage: currentPage,
-        pageSize: 6, // Show 6 products per page for demo
-        totalCount: mockProducts.length,
-        categoryName: 'Electronics & Gaming',
-        selectedFilters: currentFilters,
-        currentSort: currentSort,
-        
-        // Event handlers
-        onAddToCart: (product) => {
-          logEvent('add-to-cart', {
-            productId: product.id,
-            sku: product.sku,
-            name: product.name,
-            price: product.special_price || product.price
-          });
-          alert(`Added "${product.name}" to cart!`);
-        },
-        
-        onFilterChange: (attributeCode, value, checked) => {
-          logEvent('filter-change', {
-            attribute: attributeCode,
-            value: value,
-            checked: checked
-          });
-          
-          // Update current filters
-          if (!currentFilters[attributeCode]) {
-            currentFilters[attributeCode] = [];
-          }
-          
-          if (checked) {
-            if (!currentFilters[attributeCode].includes(value)) {
-              currentFilters[attributeCode].push(value);
-            }
-          } else {
-            currentFilters[attributeCode] = currentFilters[attributeCode].filter(v => v !== value);
-            if (currentFilters[attributeCode].length === 0) {
-              delete currentFilters[attributeCode];
-            }
-          }
-          
-          console.log('Updated filters:', currentFilters);
-        },
-        
-        onSortChange: (sortValue) => {
-          logEvent('sort-change', {
-            oldSort: currentSort,
-            newSort: sortValue
-          });
-          currentSort = sortValue;
-          console.log('Sort changed to:', sortValue);
-        },
-        
-        onPageChange: (page) => {
-          logEvent('page-change', {
-            oldPage: currentPage,
-            newPage: page
-          });
-          currentPage = page;
-          console.log('Page changed to:', page);
-        },
+          // Render the PLP component with store config to fetch data
+          SFPLP?.render({
+            container: document.getElementById('plp-container'),
+            storeConfig: storeConfig,
+            searchPhrase: searchConfig.defaultSearchPhrase,
+            categoryPath: searchConfig.defaultCategoryPath,
+            initialFilters: [
+              // { attribute: "visibility", in: ["Catalog", "Catalog, Search"] },
+              // { attribute: "inStock", eq: "true" }
+            ],
+            currentPage: currentPage,
+            pageSize: searchConfig.defaultPageSize,
+            currentSort: currentSort,
+            categoryName: searchConfig.categoryName,
+            selectedFilters: currentFilters,
+            
+            // Event handlers
+            onDataLoaded: (searchData, metadata) => {
+              logEvent('data-loaded', {
+                totalCount: searchData.total_count,
+                itemsCount: searchData.items.length,
+                facetsCount: searchData.facets.length,
+                sortableAttributes: metadata?.sortable?.length || 0
+              });
+              console.log('Data loaded:', { searchData, metadata });
 
-        // Demonstrate afterDecorate functionality
-        afterDecorate: (props, element) => {
-          console.log('PLP afterDecorate called with:', { props, element });
-          
-          // Add custom "New Arrival" badges to specific products
-          element.querySelectorAll('.product-card').forEach((card, index) => {
-            if (index < 2) { // First 2 products
-              const badge = document.createElement('div');
-              badge.innerHTML = '🆕 NEW';
-              badge.style.cssText = `
-                position: absolute;
-                top: 50px;
-                right: 12px;
-                background: linear-gradient(45deg, #28a745, #20c997);
-                color: white;
-                padding: 4px 8px;
-                border-radius: 12px;
-                font-size: 10px;
-                font-weight: bold;
-                z-index: 2;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-              `;
-              card.style.position = 'relative';
-              card.appendChild(badge);
-            }
+              document.querySelectorAll('#plp-container .product-card').forEach((card, index) => {
+                if (index < 2) { // First 2 products
+                  const badge = document.createElement('div');
+                  badge.innerHTML = '🆕 NEW';
+                  badge.style.cssText = `
+                    position: absolute;
+                    top: 50px;
+                    right: 12px;
+                    background: linear-gradient(45deg, #28a745, #20c997);
+                    color: white;
+                    padding: 4px 8px;
+                    border-radius: 12px;
+                    font-size: 10px;
+                    font-weight: bold;
+                    z-index: 2;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                  `;
+                  card.style.position = 'relative';
+                  card.appendChild(badge);
+                }
 
-            // Add click tracking to product cards
-            card.addEventListener('click', (e) => {
-              if (!e.target.closest('button')) { // Don't track button clicks
-                const productName = card.querySelector('h3 a')?.textContent;
-                logEvent('product-click', {
-                  productName: productName,
-                  position: index + 1
+                // Add click tracking to product cards
+                card.addEventListener('click', (e) => {
+                  if (!e.target.closest('button')) { // Don't track button clicks
+                    const productName = card.querySelector('h3 a')?.textContent;
+                    logEvent('product-click', {
+                      productName: productName,
+                      position: index + 1
+                    });
+                  }
                 });
+              });
+            },
+            
+            onAddToCart: (item) => {
+              const product = item.product || {};
+              const productView = item.productView || {};
+              logEvent('add-to-cart', {
+                sku: productView.sku || product.sku,
+                name: productView.name || product.name,
+                finalPrice: item.finalPrice
+              });
+              alert(`Added "${productView.name || product.name}" to cart!`);
+            },
+            
+            onFilterChange: (attribute, value, checked) => {
+              logEvent('filter-change', {
+                attribute: attribute,
+                value: value,
+                checked: checked
+              });
+              
+              // Update current filters
+              if (!currentFilters[attribute]) {
+                currentFilters[attribute] = [];
               }
-            });
-          });
+              
+              if (checked) {
+                if (!currentFilters[attribute].includes(value)) {
+                  currentFilters[attribute].push(value);
+                }
+              } else {
+                currentFilters[attribute] = currentFilters[attribute].filter(v => v !== value);
+                if (currentFilters[attribute].length === 0) {
+                  delete currentFilters[attribute];
+                }
+              }
+              
+              console.log('Updated filters:', currentFilters);
+            },
+            
+            onSortChange: (sortValue) => {
+              logEvent('sort-change', {
+                oldSort: currentSort,
+                newSort: sortValue
+              });
+              currentSort = sortValue;
+              console.log('Sort changed to:', sortValue);
+            },
+            
+            onPageChange: (page) => {
+              logEvent('page-change', {
+                oldPage: currentPage,
+                newPage: page
+              });
+              currentPage = page;
+              console.log('Page changed to:', page);
+            },
 
-          // Add a custom footer message
-          const footer = document.createElement('div');
-          footer.innerHTML = `
-            <div style="
-              background: #e9ecef;
-              padding: 20px;
-              text-align: center;
-              border-radius: 8px;
-              margin-top: 30px;
-              border: 2px dashed #6c757d;
-            ">
-              <strong>Custom Footer</strong><br>
-              <small>This footer was added via the <code>afterDecorate</code> function, demonstrating how you can customize the PLP after it renders.</small>
-            </div>
-          `;
-          element.appendChild(footer);
-        }
-      });
+            // Demonstrate afterDecorate functionality
+            afterDecorate: (props, element) => {
+              console.log('PLP afterDecorate called with:', { props, element });
+              
+              // Add custom "New Arrival" badges to specific products
+              // element.querySelectorAll('.product-card').forEach((card, index) => {
+              //   if (index < 2) { // First 2 products
+              //     const badge = document.createElement('div');
+              //     badge.innerHTML = '🆕 NEW';
+              //     badge.style.cssText = `
+              //       position: absolute;
+              //       top: 50px;
+              //       right: 12px;
+              //       background: linear-gradient(45deg, #28a745, #20c997);
+              //       color: white;
+              //       padding: 4px 8px;
+              //       border-radius: 12px;
+              //       font-size: 10px;
+              //       font-weight: bold;
+              //       z-index: 2;
+              //       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+              //     `;
+              //     card.style.position = 'relative';
+              //     card.appendChild(badge);
+              //   }
+
+              //   // Add click tracking to product cards
+              //   card.addEventListener('click', (e) => {
+              //     if (!e.target.closest('button')) { // Don't track button clicks
+              //       const productName = card.querySelector('h3 a')?.textContent;
+              //       logEvent('product-click', {
+              //         productName: productName,
+              //         position: index + 1
+              //       });
+              //     }
+              //   });
+              // });
+
+              // Add a custom footer message
+              const footer = document.createElement('div');
+              footer.innerHTML = `
+                <div style="
+                  background: #e9ecef;
+                  padding: 20px;
+                  text-align: center;
+                  border-radius: 8px;
+                  margin-top: 30px;
+                  border: 2px dashed #6c757d;
+                ">
+                  <strong>Custom Footer</strong><br>
+                  <small>This footer was added via the <code>afterDecorate</code> function, demonstrating how you can customize the PLP after it renders.</small>
+                </div>
+              `;
+              element.appendChild(footer);
+            }
+          });
+        })
+        .catch(error => {
+          console.error('Error loading configuration:', error);
+          // Fallback to initWithMockData if config loading fails
+          initWithMockData();
+        });
     }
 
     function simulateLoadingState() {
@@ -524,6 +334,67 @@
         totalCount: 0,
         categoryName: 'No Results Found',
         selectedFilters: { brand: ['nonexistent'] },
+        currentSort: 'position'
+      });
+    }
+
+    function initWithMockData() {
+      // Fallback to mock data if API is not available - for testing when API is not accessible
+      console.log('Using mock data fallback');
+      
+      const mockProductSearchData = {
+        total_count: 1,
+        items: [
+          {
+            product: {
+              "__typename": "SimpleProduct",
+              "sku": "DEMO-001",
+              "name": "Demo Product (Mock)",
+              "canonical_url": "#demo-1",
+              "small_image": {
+                "url": "https://via.placeholder.com/280x280/4caf50/ffffff?text=Demo"
+              },
+              "price_range": {
+                "minimum_price": {
+                  "regular_price": { "value": 29.99, "currency": "USD" },
+                  "final_price": { "value": 29.99, "currency": "USD" }
+                }
+              }
+            },
+            productView: {
+              "__typename": "SimpleProductView",
+              "sku": "DEMO-001",
+              "name": "Demo Product (Mock)",
+              "inStock": true,
+              "urlKey": "demo-product-1",
+              "images": [
+                {
+                  "label": "Demo Product",
+                  "url": "https://via.placeholder.com/280x280/4caf50/ffffff?text=Demo",
+                  "roles": ["main"]
+                }
+              ],
+              "price": {
+                "final": { "amount": { "value": 29.99, "currency": "USD" } },
+                "regular": { "amount": { "value": 29.99, "currency": "USD" } }
+              }
+            },
+            highlights: []
+          }
+        ],
+        facets: [],
+        page_info: {
+          current_page: 1,
+          page_size: 6,
+          total_pages: 1
+        }
+      };
+
+      SFPLP?.render({
+        container: document.getElementById('plp-container'),
+        productSearchData: mockProductSearchData,
+        categoryName: 'Demo Products (Mock Data)',
+        selectedFilters: {},
         currentSort: 'position'
       });
     }
