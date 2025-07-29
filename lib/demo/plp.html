@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PLP (Product Listing Page) UMD Demo</title>
-  <script src="../dist/sf-plp.js"></script>
+  <script src="../dist/SFPLP.js"></script>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
@@ -108,7 +108,7 @@
     }
 
     function init() {
-      console.log('PLP Demo initialized', SFplp);
+      console.log('PLP Demo initialized', SFPLP);
 
       // Mock product data following Magento schema
       const mockProducts = [
@@ -366,7 +366,7 @@
       ];
 
       // Render the PLP component
-      SFplp?.render({
+      SFPLP?.render({
         container: document.getElementById('plp-container'),
         products: mockProducts,
         filters: mockFilters,
@@ -491,7 +491,7 @@
     }
 
     function simulateLoadingState() {
-      SFplp?.render({
+      SFPLP?.render({
         container: document.getElementById('plp-container'),
         products: [],
         filters: [],
@@ -506,7 +506,7 @@
     }
 
     function simulateEmptyState() {
-      SFplp?.render({
+      SFPLP?.render({
         container: document.getElementById('plp-container'),
         products: [],
         filters: [

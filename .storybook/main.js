@@ -17,6 +17,14 @@ const config = {
   },
   "staticDirs": [
     "../public"
-  ]
+  ],
+  "core": {
+    "disableTelemetry": true
+  },
+  "watchOptions": {
+    "aggregateTimeout": 300,
+    "poll": 1000,
+    "ignored": ['**/node_modules', '**/lib/dist', '**/storybook-static']
+  }
 };
 export default config;

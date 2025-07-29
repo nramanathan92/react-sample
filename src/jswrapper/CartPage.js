@@ -1,8 +1,8 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import CartPage from "../../src/CartPage";
+import CartPage from "../CartPage";
 // Import the cart store to ensure it's included in the bundle
-import "../../src/store/cartStore";
+import "../store/cartStore";
 
 export const render = ({container, ...props}) => {
     createRoot(container).render(

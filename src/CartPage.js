@@ -15,6 +15,7 @@ const CartPage = () => {
   return (
     <main className={styles.main}>
       <div className={styles.layout}>
+        gggggg
         <CartList />
         <CartSidebar total={total} onCheckout={handleCheckout} />
       </div>
