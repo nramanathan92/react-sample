@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>MyButton UMD Test</title>
+  <link rel="stylesheet" href="custom-styles.css">
   <!-- <script src="../dist/sf-button.js"></script> -->
   <script src="../dist/sf-cart-page.js"></script>
   <script>
@@ -80,6 +81,60 @@
             customText.style.fontSize = '14px';
 
             item.querySelector('.product-info__details').appendChild(customText);
+          });
+
+          /** Custom dropdown replacement for QuantitySelector **/
+          element.querySelectorAll('.product-qty-update').forEach((qtyContainer, index) => {
+            // Get current quantity from the existing QuantitySelector
+            const quantityInput = qtyContainer.querySelector('input[type="number"]');
+            const currentQuantity = quantityInput ? parseInt(quantityInput.value) : 1;
+            
+            // Get the actual item ID from the cart store using the index
+            const cartItems = window.cartStore ? window.cartStore.getCart() : [];
+            const itemId = cartItems[index] ? cartItems[index].id : index + 1;
+            
+            console.log('Processing item at index:', index, 'with ID:', itemId, 'quantity:', currentQuantity);
+            
+            // Clear the existing content
+            qtyContainer.innerHTML = '';
+            
+            // Create custom dropdown
+            const dropdown = document.createElement('select');
+            dropdown.className = 'custom-quantity-dropdown';
+            
+            // Add options from 1 to 10
+            for (let i = 1; i <= 10; i++) {
+              const option = document.createElement('option');
+              option.value = i;
+              option.textContent = i;
+              if (i === currentQuantity) {
+                option.selected = true;
+              }
+              dropdown.appendChild(option);
+            }
+            
+            // Add change event listener
+            dropdown.addEventListener('change', (e) => {
+              const newQuantity = parseInt(e.target.value);
+              console.log('Custom dropdown quantity changed for item ID:', itemId, 'to quantity:', newQuantity);
+              if (window.cartStore) {
+                window.cartStore.handleQuantityChange(itemId, newQuantity);
+                // Force a re-render or update the UI if needed
+                console.log('Updated cart:', window.cartStore.getCart());
+              }
+            });
+            
+            // Create label
+            const label = document.createElement('label');
+            label.textContent = 'Qty: ';
+            label.className = 'custom-qty-label';
+            
+            // Add label and dropdown to container
+            qtyContainer.appendChild(label);
+            qtyContainer.appendChild(dropdown);
+            
+            // Apply container styling
+            qtyContainer.className = 'custom-qty-container';
           });
         },
       });

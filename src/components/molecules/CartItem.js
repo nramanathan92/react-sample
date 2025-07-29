@@ -14,7 +14,7 @@ const CartItem = ({ product, quantity, onDecrease, onIncrease, onQuantityChange,
       link={product.link}
       price={product.price}
     />
-    <div className={styles.right}>
+    <div className={`${styles.right} product-qty-update`}>
       <QuantitySelector
         quantity={quantity}
         onDecrease={onDecrease}
