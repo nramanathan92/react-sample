@@ -146,39 +146,6 @@
                 sortableAttributes: metadata?.sortable?.length || 0
               });
               console.log('Data loaded:', { searchData, metadata });
-
-              document.querySelectorAll('#plp-container .product-card').forEach((card, index) => {
-                if (index < 2) { // First 2 products
-                  const badge = document.createElement('div');
-                  badge.innerHTML = '🆕 NEW';
-                  badge.style.cssText = `
-                    position: absolute;
-                    top: 50px;
-                    right: 12px;
-                    background: linear-gradient(45deg, #28a745, #20c997);
-                    color: white;
-                    padding: 4px 8px;
-                    border-radius: 12px;
-                    font-size: 10px;
-                    font-weight: bold;
-                    z-index: 2;
-                    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-                  `;
-                  card.style.position = 'relative';
-                  card.appendChild(badge);
-                }
-
-                // Add click tracking to product cards
-                card.addEventListener('click', (e) => {
-                  if (!e.target.closest('button')) { // Don't track button clicks
-                    const productName = card.querySelector('h3 a')?.textContent;
-                    logEvent('product-click', {
-                      productName: productName,
-                      position: index + 1
-                    });
-                  }
-                });
-              });
             },
             
             onAddToCart: (item) => {
@@ -236,44 +203,53 @@
               console.log('Page changed to:', page);
             },
 
+            // New event that fires after DOM is fully rendered
+            onRenderComplete: (products, searchData, metadata) => {
+              logEvent('render-complete', {
+                productCount: products.length,
+                totalCount: searchData.total_count,
+                renderTime: new Date().toISOString()
+              });
+              console.log('Render complete:', { products, searchData, metadata });
+
+              // Apply DOM manipulations here instead of onDataLoaded
+              document.querySelectorAll('#plp-container .product-card').forEach((card, index) => {
+                if (index < 2) { // First 2 products
+                  const badge = document.createElement('div');
+                  badge.innerHTML = '🆕 NEW';
+                  badge.style.cssText = `
+                    position: absolute;
+                    top: 10px;
+                    right: 12px;
+                    background: linear-gradient(45deg, #28a745, #20c997);
+                    color: white;
+                    padding: 4px 8px;
+                    border-radius: 12px;
+                    font-size: 10px;
+                    font-weight: bold;
+                    z-index: 2;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                  `;
+                  card.style.position = 'relative';
+                  card.appendChild(badge);
+                }
+
+                // Add click tracking to product cards
+                card.addEventListener('click', (e) => {
+                  if (!e.target.closest('button')) { // Don't track button clicks
+                    const productName = card.querySelector('h3 a')?.textContent;
+                    logEvent('product-click', {
+                      productName: productName,
+                      position: index + 1
+                    });
+                  }
+                });
+              });
+            },
+
             // Demonstrate afterDecorate functionality
             afterDecorate: (props, element) => {
               console.log('PLP afterDecorate called with:', { props, element });
-              
-              // Add custom "New Arrival" badges to specific products
-              // element.querySelectorAll('.product-card').forEach((card, index) => {
-              //   if (index < 2) { // First 2 products
-              //     const badge = document.createElement('div');
-              //     badge.innerHTML = '🆕 NEW';
-              //     badge.style.cssText = `
-              //       position: absolute;
-              //       top: 50px;
-              //       right: 12px;
-              //       background: linear-gradient(45deg, #28a745, #20c997);
-              //       color: white;
-              //       padding: 4px 8px;
-              //       border-radius: 12px;
-              //       font-size: 10px;
-              //       font-weight: bold;
-              //       z-index: 2;
-              //       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-              //     `;
-              //     card.style.position = 'relative';
-              //     card.appendChild(badge);
-              //   }
-
-              //   // Add click tracking to product cards
-              //   card.addEventListener('click', (e) => {
-              //     if (!e.target.closest('button')) { // Don't track button clicks
-              //       const productName = card.querySelector('h3 a')?.textContent;
-              //       logEvent('product-click', {
-              //         productName: productName,
-              //         position: index + 1
-              //       });
-              //     }
-              //   });
-              // });
-
               // Add a custom footer message
               const footer = document.createElement('div');
               footer.innerHTML = `

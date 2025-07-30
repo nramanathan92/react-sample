@@ -522,6 +522,7 @@ const PLP = ({
   onSortChange,
   onPageChange,
   onDataLoaded,
+  onRenderComplete, // New event that fires after DOM is rendered
   
   // Loading state
   loading: externalLoading = false
@@ -692,6 +693,18 @@ const PLP = ({
   useEffect(() => {
     setLocalProducts(searchData.items);
   }, [searchData.items]);
+
+  // Effect to fire onRenderComplete after products are rendered
+  useEffect(() => {
+    if (localProducts.length > 0 && !loading && onRenderComplete) {
+      // Use setTimeout to ensure DOM has been updated
+      const timeoutId = setTimeout(() => {
+        onRenderComplete(localProducts, searchData, metadata);
+      }, 0);
+      
+      return () => clearTimeout(timeoutId);
+    }
+  }, [localProducts, loading, onRenderComplete, searchData, metadata]);
 
   const handleAddToCart = (item) => {
     console.log('Adding to cart:', item);
